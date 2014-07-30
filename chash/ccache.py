@@ -4,13 +4,14 @@
 Content-based cache.
 """
 
+import chash
 import cachetools
 import functools
 
 def _cachedmethod(cache, arg_idx):
     def decorator(method):
         def wrapper(self, *args, **kwargs):
-            key = chash(args[arg_idx])
+            key = chash.chash(args[arg_idx])
             try:
                 return cache[key]
             except KeyError:

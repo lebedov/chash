@@ -4,6 +4,7 @@
 Content-based hash.
 """
 
+import inspect
 import numpy as np
 import pandas as pd
 import xxhash
@@ -70,25 +71,20 @@ def chash(x):
             h.update(str(x.start))
             h.update(str(x.stop))
             h.update(str(x.step))
+        elif inspect.isfunction(x):
+            fc = x.func_code
+            h.update(fc.co_argcount)
+            h.update(fc.co_cellvars)
+            h.update(fc.co_code)
+            h.update(fc.co_consts)
+            h.update(fc.co_flags)
+            h.update(fc.co_freevars)
+            h.update(fc.co_name)
+            h.update(fc.co_names)
+            h.update(fc.co_nlocals)
+            h.update(fc.co_varnames)
         else:
             raise ValueError('type \'%s\' not content-hashable' % type(x).__name__)
 
     update(x)
     return h.digest()
-
-def _cachedmethod(cache, arg_idx):
-    def decorator(method):
-        def wrapper(self, *args, **kwargs):
-            key = chash(args[arg_idx])
-            try:
-                return cache[key]
-            except KeyError:
-                pass
-            result = method(self, *args, **kwargs)
-            cache[key] = result
-            return result
-        return functools.update_wrapper(wrapper, method)
-    return decorator
-
-def lfu_cache_method(maxsize=128, arg_idx=0):
-    return _cachedmethod(cachetools.LFUCache(maxsize), arg_idx)

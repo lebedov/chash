@@ -45,11 +45,10 @@ setup(name=NAME,
       description = DESCRIPTION,
       license = LICENSE,
       classifiers = CLASSIFIERS,
-      package_dir = {'src': 'src'},
-      packages = ['src'],
+      packages = ['chash'],
       test_suite = 'tests',
       install_requires = [
           'numpy',
           'pandas',
-          'xxhash' 
+          'xxhash'
           ])

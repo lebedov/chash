@@ -1,5 +1,5 @@
 include *.py
 include *.rst
-include src/*.py
+include chash/*.py
 include tests/*.py
 exclude MANIFEST.in
