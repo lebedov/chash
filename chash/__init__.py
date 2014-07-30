@@ -1,2 +1,6 @@
+"""
+Content-based hash tools.
+"""
+
+from ccache import *
 from chash import chash
-from ccache import lfu_class_method
