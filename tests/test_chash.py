@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 from chash import chash
+import numpy as np
+import pandas as pd
 from unittest import main, TestCase
 
 class test_chash(TestCase):
@@ -89,6 +91,9 @@ class test_chash(TestCase):
             pass
 
         self.assertRaises(ValueError, chash, Foo())
+        f = lambda x: x**2
+        g = lambda x: x**2
+        assert chash(f) == chash(g)
 
 if __name__ == '__main__':
     main()
