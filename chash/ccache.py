@@ -21,8 +21,10 @@ def _cachedmethod(cache, key_idx=None, enabled=True):
         Cache.
     key_idx : int or slice
         Indices indicating which of the memoized function's arguments are to be
-        hashed to obtain the key for a cached result. An argument's default
-        value is assumed if no value is explicitly provided.
+        hashed to obtain the key for a cached result; the key is a tuple of the
+        argument values. An argument's default value is assumed if no value is
+        explicitly provided. If `key_idx` is None, all arguments will be used
+        in the key.
     enabled : bool
         If False, don't cache any results.
     """
@@ -47,10 +49,14 @@ def _cachedmethod(cache, key_idx=None, enabled=True):
                 key = chash.chash(args[key_idx])
             else:
                 key = chash.chash(args)
+
+            # Try to use the cache:
             try:
                 return cache[key]
             except KeyError:
                 pass
+
+            # Execute method if no cache hit occurs:
             result = method(self, *args, **kwargs)
             cache[key] = result
             return result
