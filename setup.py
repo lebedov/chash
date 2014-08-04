@@ -50,5 +50,4 @@ setup(name=NAME,
       install_requires = [
           'numpy',
           'pandas',
-          'xxhash'
-          ])
+          'xxh'])
