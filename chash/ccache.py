@@ -9,7 +9,7 @@ import cachetools
 import functools
 import inspect
 
-def _cachedmethod(cache, key_idx=None, enabled=True):
+def _cachedmethod(cache, key_idx=None, hash_func=chash.chash, enabled=True):
     """Class instance method memoization decorator.
 
     Memoizes the returned value of a class instance method by hashing the
@@ -25,6 +25,8 @@ def _cachedmethod(cache, key_idx=None, enabled=True):
         argument values. An argument's default value is assumed if no value is
         explicitly provided. If `key_idx` is None, all arguments will be used
         in the key.
+    hash_func : func
+        Function to use when hashing arguments.
     enabled : bool
         If False, don't cache any results.
     """
@@ -46,9 +48,9 @@ def _cachedmethod(cache, key_idx=None, enabled=True):
 
             # Hash only the selected argument values:
             if key_idx is not None:
-                key = chash.chash(args[key_idx])
+                key = hash_func(args[key_idx])
             else:
-                key = chash.chash(args)
+                key = hash_func(args)
 
             # Try to use the cache:
             try:
@@ -71,8 +73,9 @@ def _cachedmethod(cache, key_idx=None, enabled=True):
     else:
         return decorator_disabled
 
-def lfu_cache_method(maxsize=128, key_idx=0, enabled=True):
-    return _cachedmethod(cachetools.LFUCache(maxsize), key_idx)
+def lfu_cache_method(maxsize=128, key_idx=0, hash_func=chash.chash, enabled=True):
+    return _cachedmethod(cachetools.LFUCache(maxsize), key_idx, hash_func,
+            enabled)
 
 if __name__ == '__main__':
     class Foo(object):
