@@ -7,7 +7,7 @@ Content-based hash.
 import inspect
 import numpy as np
 import pandas as pd
-import xx
+import xxh
 
 def chash(x):
     """
