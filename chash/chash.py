@@ -7,7 +7,7 @@ Content-based hash.
 import inspect
 import numpy as np
 import pandas as pd
-import xxhash
+import xx
 
 def chash(x):
     """
@@ -32,7 +32,7 @@ def chash(x):
     Certain user-defined class might not be content-hashable using this function.
     """
 
-    h = xxhash.Hasher32()
+    h = xxh.Hasher32()
     h.update(str(type(x)))
 
     def update(x):
