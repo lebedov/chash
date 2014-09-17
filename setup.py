@@ -48,6 +48,7 @@ setup(name=NAME,
       packages = ['chash'],
       test_suite = 'tests',
       install_requires = [
+          'cachetools',
           'numpy',
           'pandas',
           'xxh'])
