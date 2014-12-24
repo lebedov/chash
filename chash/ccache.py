@@ -4,6 +4,11 @@
 Content-based cache.
 """
 
+# Copyright (c) 2014, Lev Givon
+# All rights reserved.
+# Distributed under the terms of the BSD license:
+# http://www.opensource.org/licenses/bsd-license
+
 import chash
 import cachetools
 import functools
