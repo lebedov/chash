@@ -10,6 +10,10 @@ complex data structures. This can be useful for memoization of functions that
 process complex data structures (assuming that the produced data structures are
 not subsequently modified).
 
+.. image:: https://img.shields.io/pypi/v/chash.svg
+    :target: https://pypi.python.org/pypi/chash
+    :alt: Latest Version
+
 Quick Start
 -----------
 Make sure you have `pip <http://pip.pypa.io>`_ installed; once you do, install
