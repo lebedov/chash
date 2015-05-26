@@ -4,7 +4,7 @@
 Content-based hash.
 """
 
-# Copyright (c) 2014, Lev Givon
+# Copyright (c) 2014-2015, Lev Givon
 # All rights reserved.
 # Distributed under the terms of the BSD license:
 # http://www.opensource.org/licenses/bsd-license
@@ -41,7 +41,14 @@ def chash(x):
     h.update(str(type(x)))
 
     def update(x):
-        if isinstance(x, pd.Index):
+        # pd.MultiIndex.data doesn't always expose the
+        # same bytes for class instances with the same 
+        # levels/labels/names:
+        if isinstance(x, pd.MultiIndex):
+            h.update(x.levels)
+            h.update(x.labels)
+            h.update(x.names)
+        elif isinstance(x, pd.Index):
             h.update(x.data)
             h.update(x.dtype.str)
         elif isinstance(x, pd.Series):

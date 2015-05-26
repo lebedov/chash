@@ -11,7 +11,7 @@ except ImportError:
 from setuptools import setup
 
 NAME =             'chash'
-VERSION =          '0.1.0'
+VERSION =          '0.1.1'
 AUTHOR =           'Lev Givon'
 AUTHOR_EMAIL =     'lev@columbia.edu'
 URL =              'https://github.com/lebedov/chash'
